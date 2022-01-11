@@ -1,15 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white_background"
     tools:context=".SalaryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFC107"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/owner_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/ssurround_air"
+            android:text="@string/owner_title"
+            android:textColor="@color/black_light"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/owner_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/box_owner_salary"
+            android:padding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/owner_title">
+
+            <TextView
+                android:id="@+id/owner_salary_week_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ssurround_air"
+                android:text="이번주 총 급여 : "
+                android:textColor="@color/black_light"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/owner_salary_month_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/ssurround_air"
+                android:text="이번달 총 급여 : "
+                android:textColor="@color/black_light"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/owner_salary_week_title" />
+
+            <TextView
+                android:id="@+id/owner_salary_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ssurround_air"
+                android:text="5,400,000 원"
+                android:textColor="@color/black_light"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/owner_salary_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/ssurround_air"
+                android:text="21,000,000 원"
+                android:textColor="@color/black_light"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/owner_salary_week" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_juhu"
+            android:layout_width="44dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/box_juhu"
+            android:fontFamily="@font/ssurround_air"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="ON"
+            android:textColor="@color/black_light"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/owner_salary" />
+
+        <TextView
+            android:id="@+id/text_juhu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/ssurround_air"
+            android:text="@string/text_juhu"
+            android:textColor="@color/black_light"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/btn_juhu"
+            app:layout_constraintTop_toBottomOf="@+id/owner_salary" />
+
+        <Button
+            android:id="@+id/btn_night"
+            android:layout_width="44dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/box_night"
+            android:fontFamily="@font/ssurround_air"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="ON"
+            android:textColor="@color/black_light"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_juhu" />
+
+        <TextView
+            android:id="@+id/text_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/ssurround_air"
+            android:text="@string/text_night"
+            android:textColor="@color/black_light"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/btn_night"
+            app:layout_constraintTop_toBottomOf="@+id/text_juhu" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="16dp"
+            android:background="@color/main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_night" />
+
+        <TextView
+            android:id="@+id/worker_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/ssurround_air"
+            android:text="@string/worker_title"
+            android:textColor="@color/black_light"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <TextView
+            android:id="@+id/add_worker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="18dp"
+            android:fontFamily="@font/ssurround_air"
+            android:padding="8dp"
+            android:text="@string/add_worker"
+            android:textColor="@color/brown"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/worker_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_marginBottom="16dp"
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbarThumbVertical="@color/main_darker"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/worker_title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

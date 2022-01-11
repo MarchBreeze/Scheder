@@ -3,6 +3,10 @@
     <color name="main">#8F93D9</color>
     <color name="main_darker">#6A6C9E</color>
     <color name="white_background">#F2F3F5</color>
+    <color name="black_light">#444444</color>
+    <color name="yellow">#F2C777</color>
+    <color name="brown">#BF9788</color>
+
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>

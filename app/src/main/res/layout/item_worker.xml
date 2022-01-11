@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/box_worker"
+    android:padding="16dp"
+    android:layout_marginBottom="16dp"
+    android:layout_marginRight="4dp">
+
+    <TextView
+        android:id="@+id/worker_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="김알바"
+        android:textColor="@color/black_light"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/worker_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="시급 9,160원"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/worker_hour"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/worker_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="근무 18시간"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/worker_salary_week_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="이번주 총 급여 : "
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/worker_name" />
+
+    <TextView
+        android:id="@+id/worker_salary_month_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="이번달 총 급여 : "
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/worker_salary_week_title" />
+
+    <TextView
+        android:id="@+id/worker_salary_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="108,000 원"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/worker_hour" />
+
+    <TextView
+        android:id="@+id/worker_salary_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="540,000 원"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/worker_salary_week" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

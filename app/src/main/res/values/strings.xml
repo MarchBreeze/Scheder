@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Scheder</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="add_worker">+ 직원 추가</string>
+    <string name="worker_title">직원 ( 9 명)</string>
+    <string name="owner_title">관리자</string>
+    <string name="text_night">연장/휴일/야간 근로수당</string>
+    <string name="text_juhu">주휴수당</string>
 </resources>
