@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class MainFragmentAdapter(activity: FragmentActivity): FragmentStateAdapter(activity) {
 
     val fragments: List<Fragment> =
-        listOf(SalaryFragment(), CalendarFragment(), RequestFragment(), AnnouncementFragment())
+        listOf(SalaryFragment(), CalendarFragment(), RequestFragment(), RequestFragment())
 
     override fun getItemCount(): Int = fragments.size
     override fun createFragment(position: Int): Fragment {
@@ -15,7 +15,7 @@ class MainFragmentAdapter(activity: FragmentActivity): FragmentStateAdapter(acti
             0 -> SalaryFragment()
             1 -> CalendarFragment()
             2 -> RequestFragment()
-            else -> AnnouncementFragment()
+            else -> RequestFragment()
         }
     }
 }

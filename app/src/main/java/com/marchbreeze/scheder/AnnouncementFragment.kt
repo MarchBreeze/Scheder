@@ -13,7 +13,7 @@ class AnnouncementFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAnnouncementBinding.inflate(inflater, container, false)
         return binding.root
     }
