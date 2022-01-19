@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TimePickerTheme" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="android:timePickerMode">spinner</item>
+
+        <item name="colorAccent">@color/main</item>
+
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryVariant">@color/main_darker</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+</resources>

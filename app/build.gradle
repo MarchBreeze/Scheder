@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.marchbreeze.scheder"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,7 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:29.0.3') // 파이어베이스 BoM
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-auth-ktx' // 파이어베이스 인증 라이브러리
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
 }

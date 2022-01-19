@@ -32,7 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser == null) {
             // 현재 사용자 없으면 로그아웃
-            startActivity(Intent(this, SigninActivity::class.java))
+            startActivity(Intent(this, SigninTwoActivity::class.java))
             finish()
         } else {
             // 화면에 현재 사용자 번호 띄우기

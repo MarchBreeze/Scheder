@@ -1,0 +1,179 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_background">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="직원 스케줄 정보를 \n입력해주세요"
+        android:textColor="@color/black_light"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/title_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="타임 구분은 어떻게 나누셨나요?"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/subtitle_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/ssurround_air"
+        android:text="쉼표( , )로 구분해서 입력해주세요"
+        android:textColor="@color/black_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_time" />
+
+    <EditText
+        android:id="@+id/edittext_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/box_worker"
+        android:maxLines="2"
+        android:padding="16dp"
+        android:text="오픈, 미들1, 미들2, 마감"
+        android:textColor="@color/black_light"
+        android:textColorHint="#707070"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitle_time" />
+
+    <TextView
+        android:id="@+id/title_unbusy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="타임 별 평소 인원은 몇 명인가요?"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_time" />
+
+    <TextView
+        android:id="@+id/subtitle_time_unbusy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/ssurround_air"
+        android:text="쉼표( , )로 구분해서 입력해주세요"
+        android:textColor="@color/black_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_unbusy" />
+
+    <EditText
+        android:id="@+id/edittext_unbusy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/box_worker"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:text="1, 1, 1, 1"
+        android:textColor="@color/black_light"
+        android:textColorHint="#707070"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitle_time_unbusy" />
+
+    <TextView
+        android:id="@+id/title_busy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/ssurround_air"
+        android:text="바쁜 날 타임 별 인원은 몇 명인가요?"
+        android:textColor="@color/black_light"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_unbusy" />
+
+    <TextView
+        android:id="@+id/subtitle_time_busy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:elegantTextHeight="true"
+        android:fontFamily="@font/ssurround_air"
+        android:text="쉼표( , )로 구분해서 입력해주세요"
+        android:textColor="@color/black_light"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_busy" />
+
+    <EditText
+        android:id="@+id/edittext_busy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/box_worker"
+        android:padding="16dp"
+        android:text="2, 2, 2, 2"
+        android:textColor="@color/black_light"
+        android:textColorHint="#707070"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitle_time_busy" />
+
+    <Button
+        android:id="@+id/btn_set_time"
+        android:layout_width="128dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/box_night"
+        android:maxLines="2"
+        android:text="다음"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_busy" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

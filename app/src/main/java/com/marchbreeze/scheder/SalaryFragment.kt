@@ -16,6 +16,7 @@ class SalaryFragment : Fragment() {
         binding = FragmentSalaryBinding.inflate(inflater, container, false)
 
         // 가상 데이터 설정
+        // TODO 데이터 DB 연동하기 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         val datas = mutableListOf<String>("김알바", "박주방", "최직원", "장오픈", "임미들")
 
         binding.workerRecyclerView.layoutManager = LinearLayoutManager(activity)

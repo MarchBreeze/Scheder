@@ -7,4 +7,5 @@
     <string name="owner_title">관리자</string>
     <string name="text_night">연장/휴일/야간 근로수당</string>
     <string name="text_juhu">주휴수당</string>
+    <string name="app_subtitle">직원 스케줄 관리, 간편하고 확실하게</string>
 </resources>
