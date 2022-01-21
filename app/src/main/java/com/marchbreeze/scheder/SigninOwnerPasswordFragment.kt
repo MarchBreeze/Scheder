@@ -99,7 +99,7 @@ class SigninOwnerPasswordFragment : Fragment() {
                 val password = binding.edittextPassword.text.toString()
 
                 // DB에 비밀번호 추가
-                db.collection("worker")
+                db.collection("owner")
                     .document(currentId)
                     .update("pw", password)
                 Log.d("SIGNIN", "password: $password")

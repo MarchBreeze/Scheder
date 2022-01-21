@@ -1,20 +1,20 @@
 package com.marchbreeze.scheder
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.marchbreeze.scheder.databinding.FragmentAnnouncementBinding
+import androidx.fragment.app.Fragment
+import com.marchbreeze.scheder.databinding.FragmentOwnerSchedBinding
 
-class AnnouncementFragment : Fragment() {
-    lateinit var binding: FragmentAnnouncementBinding
+class OwnerSchedFragment : Fragment() {
+    lateinit var binding: FragmentOwnerSchedBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAnnouncementBinding.inflate(inflater, container, false)
+        binding = FragmentOwnerSchedBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

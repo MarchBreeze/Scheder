@@ -2,27 +2,26 @@ package com.marchbreeze.scheder
 
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.marchbreeze.scheder.databinding.ActivityMainBinding
+import com.marchbreeze.scheder.databinding.ActivityOwnerMainBinding
 
-class MainActivity : AppCompatActivity() {
+class OwnerMainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityOwnerMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityOwnerMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         window.statusBarColor = Color.parseColor("#FF3C3D59")
 
         // 뷰 페이져에 어댑터 연결
-        val adapter = MainFragmentAdapter(this)
+        val adapter = OwnerMainFragmentAdapter(this)
         binding.viewPager.adapter = adapter
 
         // 탭 설정

@@ -34,7 +34,7 @@ class SigninOwnerDetailFragment : Fragment() {
         binding.btnSetOwner.setOnClickListener {
 
             // 중복된 상호명인지 확인
-            db.collection("worker")
+            db.collection("owner")
                 .get()
                 .addOnSuccessListener { documents ->
                     val storeName = eraseBlank(binding.edittextStorename.text.toString())
@@ -59,7 +59,7 @@ class SigninOwnerDetailFragment : Fragment() {
                         }
 
                         // DB에 저장
-                        db.collection("worker")
+                        db.collection("owner")
                             .document(currentId)
                             .update(
                                 mapOf(

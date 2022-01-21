@@ -1,20 +1,20 @@
 package com.marchbreeze.scheder
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.marchbreeze.scheder.databinding.FragmentRequestBinding
+import androidx.fragment.app.Fragment
+import com.marchbreeze.scheder.databinding.FragmentOwnerRequestBinding
 
-class RequestFragment : Fragment() {
-    lateinit var binding: FragmentRequestBinding
+class OwnerRequestFragment : Fragment() {
+    lateinit var binding: FragmentOwnerRequestBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRequestBinding.inflate(inflater, container, false)
+        binding = FragmentOwnerRequestBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

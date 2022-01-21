@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.marchbreeze.scheder.databinding.ItemWorkerBinding
 
 
-class MainRecyclerViewAdapter(val datas: MutableList<String>) :
+class OwnerSalaryRecyclerViewAdapter(val datas: MutableList<String>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MainViewHolder(val binding: ItemWorkerBinding) : RecyclerView.ViewHolder(binding.root)

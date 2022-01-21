@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.marchbreeze.scheder.databinding.ItemTimeDurationBinding
 
-class SigninTimeDurationAdapter(
+class SigninOwnerTimeDurationAdapter(
     private var timeList: MutableList<String>,
     var timeDurationHour: MutableList<String>,
     var timeDurationMinute: MutableList<String>,
@@ -48,12 +48,12 @@ class SigninTimeDurationAdapter(
                     Log.d("SIGNIN", "${timeList[position]} : ${hour}시간 0${minute}분")
                 }
 
-                db.collection("worker")
+                db.collection("owner")
                     .document(currentId)
                     .update("timeDurationHour", timeDurationHour)
                 Log.d("SIGNIN", "timeDurationHour : $timeDurationHour")
 
-                db.collection("worker")
+                db.collection("owner")
                     .document(currentId)
                     .update("timeDurationMinute", timeDurationMinute)
                 Log.d("SIGNIN", "timeDurationMinute : $timeDurationMinute")

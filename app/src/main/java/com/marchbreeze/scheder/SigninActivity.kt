@@ -30,7 +30,7 @@ class SigninActivity : AppCompatActivity() {
         Log.d("SIGNIN", "Replace Fragment")
         val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_signin, fragment)
-        transaction.disallowAddToBackStack().commit()
+        transaction.addToBackStack(null).commit()
     }
 
     fun replaceFragmentWithId(fragment: Fragment, documentId: String) {
@@ -40,10 +40,14 @@ class SigninActivity : AppCompatActivity() {
         Log.d("SIGNIN", "Replace Fragment")
         val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_signin, fragment)
-        transaction.disallowAddToBackStack().commit()
+        transaction.addToBackStack(null).commit()
     }
 
-    fun replaceFragmentWithIdList(fragment: Fragment, documentId: String, timeList: MutableList<String>) {
+    fun replaceFragmentWithIdList(
+        fragment: Fragment,
+        documentId: String,
+        timeList: MutableList<String>
+    ) {
         val bundle = Bundle()
         bundle.putString("documentId", documentId)
         bundle.putStringArray("timeList", timeList.toTypedArray())
@@ -51,6 +55,11 @@ class SigninActivity : AppCompatActivity() {
         Log.d("SIGNIN", "Replace Fragment")
         val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container_signin, fragment)
-        transaction.disallowAddToBackStack().commit()
+        transaction.addToBackStack(null).commit()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
 }

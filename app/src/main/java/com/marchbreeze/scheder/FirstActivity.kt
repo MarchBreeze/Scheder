@@ -16,6 +16,7 @@ class FirstActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
+            Log.d("SIGNIN", "Pushed Login Btn")
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

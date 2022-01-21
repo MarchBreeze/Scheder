@@ -56,7 +56,7 @@ class SigninOwnerTimeDurationFragment : Fragment() {
                     "hour" to hour,
                     "minute" to minute
                 )
-                db.collection("worker")
+                db.collection("owner")
                     .document(currentId)
                     .update("openTime", openTime)
 
@@ -83,11 +83,11 @@ class SigninOwnerTimeDurationFragment : Fragment() {
 
         binding.recyclerviewTime.layoutManager = LinearLayoutManager(activity)
         binding.recyclerviewTime.adapter =
-            SigninTimeDurationAdapter(timeList, timeDurationHour, timeDurationMinute, currentId)
+            SigninOwnerTimeDurationAdapter(timeList, timeDurationHour, timeDurationMinute, currentId)
 
         binding.btnSetDivision.setOnClickListener {
             // 회원가입 성공적 표시
-            db.collection("worker")
+            db.collection("owner")
                 .document(currentId)
                 .update("finishSignin", true)
 

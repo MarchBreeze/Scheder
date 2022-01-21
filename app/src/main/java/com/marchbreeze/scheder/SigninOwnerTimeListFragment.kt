@@ -43,7 +43,7 @@ class SigninOwnerTimeListFragment : Fragment() {
 
             if ((timeList.size == unbusyNumberList.size) and (timeList.size == busyNumberList.size) and (busyNumberList.size != 0)) {
                 // DB에 추가
-                db.collection("worker")
+                db.collection("owner")
                     .document(currentId)
                     .update(
                         mapOf(

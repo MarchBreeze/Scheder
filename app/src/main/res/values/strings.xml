@@ -8,4 +8,11 @@
     <string name="text_night">연장/휴일/야간 근로수당</string>
     <string name="text_juhu">주휴수당</string>
     <string name="app_subtitle">직원 스케줄 관리, 간편하고 확실하게</string>
+    <string name="title_activity_login_findpw">LoginFindpwActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="find_pw"><![CDATA[< 비밀번호 찾기 >]]></string>
 </resources>

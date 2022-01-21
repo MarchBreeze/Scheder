@@ -1,16 +1,13 @@
 package com.marchbreeze.scheder
 
-import android.app.Activity
-import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.devhoony.lottieproegressdialog.LottieProgressDialog
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -18,12 +15,11 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.marchbreeze.scheder.databinding.FragmentSigninAuthBinding
+import com.marchbreeze.scheder.databinding.ActivityLoginFindPwBinding
 import java.util.concurrent.TimeUnit
 
-class SigninOwnerAuthFragment : Fragment() {
-
-    private lateinit var binding: FragmentSigninAuthBinding
+class LoginFindPwActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginFindPwBinding
 
     // 인증코드 전송 실패 시, 재전송에 사용
     private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
@@ -39,22 +35,22 @@ class SigninOwnerAuthFragment : Fragment() {
     private lateinit var progressDialogSend: LottieProgressDialog
     private lateinit var progressDialogAuth: LottieProgressDialog
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        Log.d("SIGNIN", "View SigninAuthFragment")
-        binding = FragmentSigninAuthBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("LOGIN", "View LoginFindPwActivity")
+        binding = ActivityLoginFindPwBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.titleAuth.visibility = View.GONE
         binding.edittextAuth.visibility = View.GONE
         binding.btnAuth.visibility = View.GONE
         binding.btnResend.visibility = View.GONE
 
+        binding.arrowDown.visibility = View.GONE
+        binding.titlePw.visibility = View.GONE
+        binding.btnToLogin.visibility = View.GONE
+
         // 파이어베이스 인증 설정
-        // TODO Firebase 보안 규칙 설정하기 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         firbaseAuth = FirebaseAuth.getInstance()
 
         // 인증 상태에 따른 인증 콜백 정의
@@ -69,7 +65,7 @@ class SigninOwnerAuthFragment : Fragment() {
             // 잘못된 인증 요청 (잘못된 번호 혹은 인증 코드) 시 호출
             override fun onVerificationFailed(e: FirebaseException) {
                 progressDialogAuth.dismiss()
-                Toast.makeText(activity, "잘못된 인증 요청이에요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginFindPwActivity, "잘못된 인증 요청이에요", Toast.LENGTH_SHORT).show()
             }
 
             // 인증 코드 전송 후 호출
@@ -78,17 +74,17 @@ class SigninOwnerAuthFragment : Fragment() {
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
                 // 인증코드 입력 요구 & 크루덴션 생성해야함 (코드랑 인증ID랑 합쳐서)
-                Log.d("SIGNIN", "Send Verification Code")
+                Log.d("LOGIN", "Send Verification Code")
                 progressDialogSend.dismiss()
-                Toast.makeText(activity, "인증번호가 발송됐어요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginFindPwActivity, "인증번호가 발송됐어요!", Toast.LENGTH_SHORT).show()
 
                 //ID와 token 저장
                 mVerificationId = verificationId
                 forceResendingToken = token
-                Log.d("SIGNIN", "verificationId : $mVerificationId")
-                Log.d("SIGNIN", "token : $forceResendingToken")
+                Log.d("LOGIN", "verificationId : $mVerificationId")
+                Log.d("LOGIN", "token : $forceResendingToken")
 
-                Log.d("SIGNIN", "Visiblize Auth Textviews")
+                Log.d("LOGIN", "Visiblize Auth Textviews")
                 binding.titleAuth.visibility = View.VISIBLE
                 binding.edittextAuth.visibility = View.VISIBLE
                 binding.btnAuth.visibility = View.VISIBLE
@@ -102,42 +98,65 @@ class SigninOwnerAuthFragment : Fragment() {
             val phoneFront = binding.edittextPhonenumberFront.text.toString().trim()
             val phoneBack = binding.edittextPhonenumberBack.text.toString().trim()
             val phone = "+8210$phoneFront$phoneBack"
+            currentId = "010$phoneFront$phoneBack"
+
             // 전화번호 인증 절차
             if (TextUtils.isEmpty(phoneFront) or TextUtils.isEmpty(phoneBack)) {
-                Log.d("SIGNIN", "Missing Phone Number")
-                Toast.makeText(activity, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Log.d("LOGIN", "Missing Phone Number")
+                Toast.makeText(this, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else {
-
                 // 이미 등록된 번호인지 여부 확인 후 인증 번호 전송
-                val doc = db.collection("owner")
+                val docOwner = db.collection("owner")
                     .document("010${phoneFront}${phoneBack}_1")
-                doc.get().addOnSuccessListener { document ->
-                    if (document == null) {
-                        Log.d("SIGNIN", "Run Phone Number Verification (New User)")
-                        if (binding.warningPhone.text == "이미 등록된 번호입니다! 로그인해주세요") {
-                            binding.warningPhone.text = ""
-                        }
-                        startPhoneNumberVerification(phone)
-
-                    } else {
+                val docWorker = db.collection("worker")
+                    .document("010${phoneFront}${phoneBack}_1")
+                docOwner.get().addOnSuccessListener { document ->
+                    if (document != null) {
+                        // Owner DB에서 비밀번호 찾기
                         if (document.get("finishSignin") == true) {
-                            Log.d("SIGNIN", "Already Verificated Number")
-                            Toast.makeText(activity, "이미 등록된 번호입니다 \n 로그인해주세요", Toast.LENGTH_LONG)
-                                .show()
-                            binding.warningPhone.text = "이미 등록된 번호입니다! 로그인해주세요"
-                            binding.warningPhone.setTextColor(Color.RED)
-
-                        } else {
-                            Log.d("SIGNIN", "Run Phone Number Verification (Uncompleted User)")
-                            if (binding.warningPhone.text == "이미 등록된 번호입니다! 로그인해주세요") {
-
+                            Log.d("LOGIN", "Found id: Verificated Number")
+                            if (binding.warningPhone.text == "등록되지 않은 번호에요") {
                                 binding.warningPhone.text = ""
                             }
                             startPhoneNumberVerification(phone)
+                        } else {
+                            Log.d("LOGIN", "Found id: Uncompleted Signin")
+                            Toast.makeText(this, "등록되지 않은 번호입니다!\n회원가입 해주세요", Toast.LENGTH_LONG)
+                                .show()
+                            binding.warningPhone.text = "등록되지 않은 번호에요"
+                            binding.warningPhone.setTextColor(Color.RED)
+                        }
+                    } else {
+                        // Worker DB에서 비밀번호 찾기
+                        docWorker.get().addOnSuccessListener { document ->
+                            if (document != null) {
+                                if (document.get("finishSignin") == true) {
+                                    Log.d("LOGIN", "Found id: Verificated Number")
+                                    if (binding.warningPhone.text == "등록되지 않은 번호에요") {
+                                        binding.warningPhone.text = ""
+                                    }
+                                    startPhoneNumberVerification(phone)
+                                } else {
+                                    Log.d("LOGIN", "Found id: Uncompleted Signin")
+                                    Toast.makeText(
+                                        this,
+                                        "등록되지 않은 번호입니다!\n회원가입 해주세요",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    binding.warningPhone.text = "등록되지 않은 번호에요"
+                                    binding.warningPhone.setTextColor(Color.RED)
+                                }
+                            } else {
+                                Log.d("LOGIN", "Cannot find id")
+                                Toast.makeText(this, "등록되지 않은 번호입니다!\n회원가입 해주세요", Toast.LENGTH_LONG)
+                                    .show()
+                                binding.warningPhone.text = "등록되지 않은 번호에요"
+                                binding.warningPhone.setTextColor(Color.RED)
+                            }
                         }
                     }
                 }.addOnFailureListener { e ->
-                    Log.d("SIGNIN", "btnPhonenumber failure ($e)")
+                    Log.d("LOGIN", "btnPhonenumber failure ($e)")
                 }
             }
         }
@@ -150,10 +169,10 @@ class SigninOwnerAuthFragment : Fragment() {
             val phone = "+8210$phoneFront$phoneBack"
             // 전화번호 인증 절차
             if (TextUtils.isEmpty(phoneFront) or TextUtils.isEmpty(phoneBack)) {
-                Log.d("SIGNIN", "Missing Phone Number")
-                Toast.makeText(activity, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Log.d("LOGIN", "Missing Phone Number")
+                Toast.makeText(this, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("SIGNIN", "Resend Verification Code")
+                Log.d("LOGIN", "Resend Verification Code")
                 resendVerificationCode(phone, forceResendingToken)
             }
         }
@@ -164,20 +183,25 @@ class SigninOwnerAuthFragment : Fragment() {
             val code = binding.edittextAuth.text.toString().trim()
             // 인증코드 인증 절차
             if (TextUtils.isEmpty(code)) {
-                Log.d("SIGNIN", "Missing Verification Number")
-                Toast.makeText(activity, "인증번호 6자리를 모두 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Log.d("LOGIN", "Missing Verification Number")
+                Toast.makeText(this, "인증번호 6자리를 모두 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else {
                 verifyPhoneNumberWithCode(mVerificationId, code)
             }
         }
-        return binding.root
+
+        // 로그인 화면으로 버튼
+        binding.btnToLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 
     // 인증 진행 함수
     private fun startPhoneNumberVerification(phone: String) {
         // progress dialog 설정
         progressDialogSend = LottieProgressDialog(
-            context = context as Activity,
+            context = this,
             isCancel = true,
             dialogWidth = null,
             dialogHeight = null,
@@ -192,7 +216,7 @@ class SigninOwnerAuthFragment : Fragment() {
         val options = PhoneAuthOptions.newBuilder(firbaseAuth)
             .setPhoneNumber(phone)
             .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(activity!!)
+            .setActivity(this)
             .setCallbacks(mCallBacks!!)
             .build()
 
@@ -206,7 +230,7 @@ class SigninOwnerAuthFragment : Fragment() {
     ) {
         // progress dialog 설정
         progressDialogSend = LottieProgressDialog(
-            context = context as Activity,
+            context = this,
             isCancel = true,
             dialogWidth = null,
             dialogHeight = null,
@@ -221,7 +245,7 @@ class SigninOwnerAuthFragment : Fragment() {
         val options = PhoneAuthOptions.newBuilder(firbaseAuth)
             .setPhoneNumber(phone)
             .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(activity!!)
+            .setActivity(this)
             .setCallbacks(mCallBacks!!)
             .setForceResendingToken(token!!)
             .build()
@@ -233,7 +257,7 @@ class SigninOwnerAuthFragment : Fragment() {
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         // progress dialog 설정
         progressDialogAuth = LottieProgressDialog(
-            context = context as Activity,
+            context = this,
             isCancel = false,
             dialogWidth = null,
             dialogHeight = null,
@@ -253,40 +277,61 @@ class SigninOwnerAuthFragment : Fragment() {
         firbaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
                 // 인증번호 인증 성공 시
-                Log.d("SIGNIN", "SIGNIN Successful")
+                Log.d("LOGIN", "SIGNIN Successful")
                 progressDialogAuth.dismiss()
-                Toast.makeText(activity, "전화번호 인증 성공!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "전화번호 인증 성공!", Toast.LENGTH_SHORT).show()
 
-                // 정보 저장
-                val phoneFront = binding.edittextPhonenumberFront.text.toString().trim()
-                val phoneBack = binding.edittextPhonenumberBack.text.toString().trim()
-                val phone = "010$phoneFront$phoneBack"
+                // 인터페이스 표시
+                binding.arrowDown.visibility = View.VISIBLE
+                binding.titlePw.visibility = View.VISIBLE
+                binding.btnToLogin.visibility = View.VISIBLE
 
-                // 새로운 관리자 유저 생성
-                val user = OwnerObject(id = phone)
+                // DB에서 맞는 pw 추출 후 표시
+                // id 검색
+                // 우선 관리자 유저에서 id 검색
                 db.collection("owner")
-                    .document("${phone}_1")
-                    .set(user)
-                Log.d("SIGNIN", "Add user (doc : ${phone}_1 )")
-
-                // 다음 회원가입 페이지로 전환
-                currentId = "${phone}_1"
-                (activity as SigninActivity).replaceFragmentWithId(
-                    SigninOwnerPasswordFragment(),
-                    currentId
-                )
-                Log.d("SIGNIN", "Set SigninOwnerPasswordFragment (currentId : $currentId)")
-
+                    .whereEqualTo("id", currentId)
+                    .get().addOnSuccessListener { documentsOwner ->
+                        if (!documentsOwner.isEmpty) {
+                            for (document in documentsOwner) {
+                                val pw = document.get("pw")
+                                progressDialogAuth.dismiss()
+                                Log.d("LOGIN", "Found PW : $pw")
+                                binding.titlePw.text = "비밀번호 : ${pw.toString()}"
+                            }
+                        } else {
+                            // 직원 유저에서 id 검색
+                            db.collection("worker")
+                                .whereEqualTo("id", currentId)
+                                .get().addOnSuccessListener { documentsWorker ->
+                                    if (!documentsWorker.isEmpty) {
+                                        for (document in documentsOwner) {
+                                            val pw = document.get("pw")
+                                            progressDialogAuth.dismiss()
+                                            Log.d("LOGIN", "Found PW : $pw")
+                                            binding.titlePw.text = "비밀번호 : ${pw.toString()}"
+                                        }
+                                    } else {
+                                        progressDialogAuth.dismiss()
+                                        Toast.makeText(this, "인증번호를 다시 확인해주세요", Toast.LENGTH_SHORT)
+                                            .show()
+                                        Log.d("LOGIN", "Failed to find pw")
+                                    }
+                                }
+                        }
+                    }
             }
             .addOnFailureListener { e ->
                 // 실패 시
-                Log.d("SIGNIN", "SIGNIN Failed")
+                Log.d("LOGIN", "SIGNIN Failed")
                 progressDialogAuth.dismiss()
-                Toast.makeText(activity, "인증번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "인증번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show()
             }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 }
