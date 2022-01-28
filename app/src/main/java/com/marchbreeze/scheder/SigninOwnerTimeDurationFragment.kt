@@ -11,7 +11,12 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import com.kizitonwose.time.Interval
+import com.kizitonwose.time.Minute
+import com.kizitonwose.time.hours
+import com.kizitonwose.time.minutes
 import com.marchbreeze.scheder.databinding.FragmentSigninOwnerTimeDurationBinding
+import kotlin.collections.mutableListOf as mutableListOf
 
 class SigninOwnerTimeDurationFragment : Fragment() {
     lateinit var binding: FragmentSigninOwnerTimeDurationBinding
@@ -20,8 +25,10 @@ class SigninOwnerTimeDurationFragment : Fragment() {
     private lateinit var currentId: String
     private lateinit var timeList: MutableList<String>
 
-    private var timeDurationHour: MutableList<String> = mutableListOf()
-    private var timeDurationMinute: MutableList<String> = mutableListOf()
+    val startHour: MutableList<String> = mutableListOf()
+    val startMinute: MutableList<String> = mutableListOf()
+    val endHour: MutableList<String> = mutableListOf()
+    val endMinute: MutableList<String> = mutableListOf()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -41,49 +48,24 @@ class SigninOwnerTimeDurationFragment : Fragment() {
 
         // edittext 값 입력 받을 timeduration 리스트 미리 생성 (칸 개수 맞춰서)
         for (i in 1..timeList.size) {
-            timeDurationHour.add("4")
+            startHour.add((6+3*i).toString())
         }
         for (i in 1..timeList.size) {
-            timeDurationMinute.add("0")
+            startMinute.add("0")
         }
-
-
-        // 오픈 시간 타임피커로 설정
-        binding.btnOpentime.setOnClickListener {
-            TimePickerDialog(activity, { _, hour, minute ->
-
-                val openTime = mutableMapOf<String, Int>(
-                    "hour" to hour,
-                    "minute" to minute
-                )
-                db.collection("owner")
-                    .document(currentId)
-                    .update("openTime", openTime)
-
-                if (hour >= 10) {
-                    if (minute >= 10) {
-                        binding.btnOpentime.text = "${hour}시 ${minute}분"
-                        Log.d("SIGNIN", "openTime: ${hour}시 ${minute}분")
-                    } else {
-                        binding.btnOpentime.text = "${hour}시 0${minute}분"
-                        Log.d("SIGNIN", "openTime: ${hour}시 0${minute}분")
-                    }
-                } else {
-                    if (minute >= 10) {
-                        binding.btnOpentime.text = "0${hour}시 ${minute}분"
-                        Log.d("SIGNIN", "openTime: 0${hour}시 ${minute}분")
-                    } else {
-                        binding.btnOpentime.text = "0${hour}시 0${minute}분"
-                        Log.d("SIGNIN", "openTime: 0${hour}시 0${minute}분")
-                    }
-                }
-            }, 8, 0, true).show()
+        for (i in 1..timeList.size) {
+            endHour.add((9+3*i).toString())
+        }
+        for (i in 1..timeList.size) {
+            endMinute.add("0")
         }
 
 
         binding.recyclerviewTime.layoutManager = LinearLayoutManager(activity)
         binding.recyclerviewTime.adapter =
-            SigninOwnerTimeDurationAdapter(timeList, timeDurationHour, timeDurationMinute, currentId)
+            SigninOwnerTimeDurationAdapter(timeList, currentId, startHour, startMinute, endHour, endMinute)
+
+
 
         binding.btnSetDivision.setOnClickListener {
             // 회원가입 성공적 표시

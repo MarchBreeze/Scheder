@@ -86,7 +86,8 @@ class LoginActivity : AppCompatActivity() {
                                             Toast.makeText(this, "로그인 성공!", Toast.LENGTH_SHORT)
                                                 .show()
                                             Log.d("LOGIN", "Login as worker : $id")
-                                            // TODO 직원 액티비티 만들고 링크 수정하기 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+                                            // TODO 직원 액티비티 만들고 링크 수정하기 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                            // TODO 액티비티 연결 전 승인 여부 확인하기 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                             startActivity(
                                                 Intent(
                                                     this,

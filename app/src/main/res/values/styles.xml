@@ -3,10 +3,20 @@
     <style name="TimePickerTheme" parent="ThemeOverlay.MaterialComponents.TimePicker">
         <item name="android:timePickerMode">spinner</item>
 
-        <item name="colorAccent">@color/main</item>
+        // 버튼 색상
+        <item name="colorAccent">@color/main_darker</item>
+        <item name="android:textColorPrimary">@color/main_darker</item>
 
-        <item name="colorPrimary">@color/main</item>
-        <item name="colorPrimaryVariant">@color/main_darker</item>
-        <item name="colorOnPrimary">@color/white</item>
+        // 배경 색상
+        <item name="android:background">@color/white_background</item>
+
+        // 디바이더 색상
+        <item name="colorControlNormal">@color/main_darker</item>
+
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textSize">18sp</item>
+
     </style>
+
 </resources>

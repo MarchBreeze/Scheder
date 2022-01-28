@@ -29,7 +29,7 @@ class SigninOwnerGuideFragment : Fragment() {
 
         db.collection("owner").document(currentId).get().addOnSuccessListener { document ->
             val storeName = document.get("storeName").toString()
-            binding.textStoreName.text = "가게명: $storeName"
+            binding.textStoreName.text = "가게명  :  $storeName"
             Log.d("SIGNIN", "Set StoreName")
         }
 

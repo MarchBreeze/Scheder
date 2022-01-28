@@ -31,37 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <TextView
-        android:id="@+id/title_open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/ssurround_air"
-        android:text="오픈 타임의 출근 시간을 \n입력해주세요"
-        android:textColor="@color/black_light"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <TextView
-        android:id="@+id/btn_opentime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/box_worker"
-        android:elevation="4dp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="08시 00분"
-        android:textSize="20sp"
-        android:textStyle="normal"
-        android:textColor="@color/black_light"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_open" />
 
 
     <TextView
@@ -71,11 +40,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/ssurround_air"
-        android:text="타임마다 얼마나 오래 근무하나요?"
+        android:text="몇시부터 몇시까지 한 타임인가요?"
         android:textColor="@color/black_light"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_opentime" />
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TextView
         android:id="@+id/subtitle_time"

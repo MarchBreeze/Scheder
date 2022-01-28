@@ -3,7 +3,6 @@
     package="com.marchbreeze.scheder">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -12,8 +11,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Scheder">
-        <activity android:name=".LoginFindPwActivity"/>
+        android:theme="@style/Theme.Scheder"
+        android:fullBackupContent="@xml/backup_descriptor">
+        <activity android:name=".LoginFindPwActivity" />
         <activity android:name=".SigninActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".FirstActivity">

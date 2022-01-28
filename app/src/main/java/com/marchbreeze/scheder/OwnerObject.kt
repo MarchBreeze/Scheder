@@ -9,11 +9,11 @@ class OwnerObject (
     val timeList: MutableList<String> = mutableListOf(),
     val unbusyNumberList: MutableList<String> = mutableListOf(),
     val busyNumberList: MutableList<String> = mutableListOf(),
-    val openTime: MutableMap<String, Int> = mutableMapOf(
-        "hour" to 8,
-        "minute" to 0
-    ),
-    val timeDurationHour: MutableList<String> = mutableListOf(),
-    val timeDurationMinute: MutableList<String> = mutableListOf(),
+
+    val startHour: MutableList<String> = mutableListOf(),
+    val startMinute: MutableList<String> = mutableListOf(),
+    val endHour: MutableList<String> = mutableListOf(),
+    val endMinute: MutableList<String> = mutableListOf(),
+
     val finishSignin: Boolean = false
 )

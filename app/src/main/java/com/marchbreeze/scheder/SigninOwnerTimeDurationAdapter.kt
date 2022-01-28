@@ -10,9 +10,11 @@ import com.marchbreeze.scheder.databinding.ItemTimeDurationBinding
 
 class SigninOwnerTimeDurationAdapter(
     private var timeList: MutableList<String>,
-    var timeDurationHour: MutableList<String>,
-    var timeDurationMinute: MutableList<String>,
-    var currentId: String
+    var currentId: String,
+    val startHour: MutableList<String> = mutableListOf(),
+    val startMinute: MutableList<String> = mutableListOf(),
+    val endHour: MutableList<String> = mutableListOf(),
+    val endMinute: MutableList<String> = mutableListOf()
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -34,34 +36,75 @@ class SigninOwnerTimeDurationAdapter(
         val binding = (holder as SigninTimeDurationViewHolder).binding
         binding.time.text = timeList[position]
 
-        binding.btnSetDuration.setOnClickListener {
-            TimePickerDialog(binding.root.context, { _, hour, minute ->
+        val startHour00 = mutableListOf("09", "12", "15", "18", "21", "24", "27", "30")
+        val endHour00 = mutableListOf("12", "15", "18", "21", "24", "27", "30", "33")
+        binding.btnStartTime.text = "${startHour00[position]} : 00"
+        binding.btnEndTime.text = "${endHour00[position]} : 00"
 
-                timeDurationHour[position] = hour.toString()
-                timeDurationMinute[position] = minute.toString()
+        binding.btnStartTime.setOnClickListener {
+            TimePickerDialog(
+                binding.root.context,
+                R.style.TimePickerTheme,
+                { _, hour, minute ->
 
-                if (minute >= 10) {
-                    binding.btnSetDuration.text = "${hour}시간 ${minute}분"
-                    Log.d("SIGNIN", "${timeList[position]} : ${hour}시간 ${minute}분")
-                } else {
-                    binding.btnSetDuration.text = "${hour}시간 0${minute}분"
-                    Log.d("SIGNIN", "${timeList[position]} : ${hour}시간 0${minute}분")
-                }
+                    startHour[position] = hour.toString()
+                    startMinute[position] = minute.toString()
 
-                db.collection("owner")
-                    .document(currentId)
-                    .update("timeDurationHour", timeDurationHour)
-                Log.d("SIGNIN", "timeDurationHour : $timeDurationHour")
+                    binding.btnStartTime.text =
+                        "${makeDoubleDigit(hour.toString())}:${makeDoubleDigit(minute.toString())}"
+                    Log.d("SIGNIN", "${timeList[position]} Start: ${hour}:${minute}")
 
-                db.collection("owner")
-                    .document(currentId)
-                    .update("timeDurationMinute", timeDurationMinute)
-                Log.d("SIGNIN", "timeDurationMinute : $timeDurationMinute")
 
-            }, timeDurationHour[position].toInt(), timeDurationMinute[position].toInt(), true).show()
+                    db.collection("owner")
+                        .document(currentId)
+                        .update("startHour", startHour)
+                    Log.d("SIGNIN", "startHour : $startHour")
+
+                    db.collection("owner")
+                        .document(currentId)
+                        .update("startMinute", startMinute)
+                    Log.d("SIGNIN", "startMinute : $startMinute")
+
+                }, startHour[position].toInt(), startMinute[position].toInt(), true
+            ).show()
         }
 
+        binding.btnEndTime.setOnClickListener {
+            TimePickerDialog(
+                binding.root.context,
+                R.style.TimePickerTheme,
+                { _, hour, minute ->
+
+                    endHour[position] = hour.toString()
+                    endMinute[position] = minute.toString()
+
+                    binding.btnEndTime.text =
+                        "${makeDoubleDigit(hour.toString())}:${makeDoubleDigit(minute.toString())}"
+                    Log.d("SIGNIN", "${timeList[position]} End: ${hour}:${minute}")
+
+
+                    db.collection("owner")
+                        .document(currentId)
+                        .update("endHour", endHour)
+                    Log.d("SIGNIN", "endHour : $endHour")
+
+                    db.collection("owner")
+                        .document(currentId)
+                        .update("endMinute", endMinute)
+                    Log.d("SIGNIN", "endMinute : $endMinute")
+
+                }, endHour[position].toInt(), endMinute[position].toInt(), true
+            ).show()
+        }
     }
 
+    private fun makeDoubleDigit(number: String): String {
+        return if (number.toInt() < 10) {
+            "0$number"
+        } else {
+            number
+        }
+    }
 
 }
+

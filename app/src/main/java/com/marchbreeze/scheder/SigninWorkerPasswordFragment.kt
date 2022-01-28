@@ -10,20 +10,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
 import com.marchbreeze.scheder.databinding.FragmentSigninPasswordBinding
 import java.util.regex.Pattern
 
 class SigninWorkerPasswordFragment : Fragment() {
 
     lateinit var binding: FragmentSigninPasswordBinding
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private lateinit var currentId: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("SIGNIN", "View SigninPasswordFragment")
         binding = FragmentSigninPasswordBinding.inflate(inflater, container, false)
+        Log.d("SIGNIN", "View SigninPasswordFragment")
+
+        currentId = arguments?.getString("documentId").toString()
+        Log.d("SIGNIN", "currentId : $currentId")
 
         // 비밀번호 규칙 확인 기능
         binding.edittextPassword.addTextChangedListener(object : TextWatcher {
@@ -89,14 +95,21 @@ class SigninWorkerPasswordFragment : Fragment() {
 
         // 비밀번호 등록
         binding.btnPassword.setOnClickListener {
-            // TODO 데이터베이스에 비밀번호 추가 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             if ((binding.titlePasswordConfirm.text == "O 비밀번호 일치") and (binding.titlePasswordPattern.text == "O 비밀번호 형식 만족")) {
                 val password = binding.edittextPassword.text.toString()
+
+                // DB에 비밀번호 추가
+                db.collection("worker")
+                    .document(currentId)
+                    .update("pw", password)
                 Log.d("SIGNIN", "password: $password")
 
                 // 다음 회원가입 페이지로 전환
-                (activity as SigninActivity).replaceFragment(SigninWorkerDetailFragment())
-                Log.d("SIGNIN", "Set SigninWorkerDetailFragment")
+                (activity as SigninActivity).replaceFragmentWithId(
+                    SigninWorkerDetailFragment(),
+                    currentId
+                )
+                Log.d("SIGNIN", "Set SigninWorkerDetailFragment (currentId : $currentId)")
             } else {
                 if (binding.titlePasswordConfirm.text == "O 비밀번호 일치") {
                     Toast.makeText(activity, "비밀번호 형식을 맞춰주세요", Toast.LENGTH_SHORT).show()

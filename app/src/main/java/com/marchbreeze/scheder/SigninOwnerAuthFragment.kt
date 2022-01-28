@@ -109,36 +109,77 @@ class SigninOwnerAuthFragment : Fragment() {
             } else {
 
                 // 이미 등록된 번호인지 여부 확인 후 인증 번호 전송
-                val doc = db.collection("owner")
-                    .document("010${phoneFront}${phoneBack}_1")
-                doc.get().addOnSuccessListener { document ->
-                    if (document == null) {
-                        Log.d("SIGNIN", "Run Phone Number Verification (New User)")
-                        if (binding.warningPhone.text == "이미 등록된 번호입니다! 로그인해주세요") {
-                            binding.warningPhone.text = ""
-                        }
-                        startPhoneNumberVerification(phone)
+                val docId = "010${phoneFront}${phoneBack}_1"
+                val docOwner = db.collection("owner")
+                    .document(docId)
+                val docWorker = db.collection("worker")
+                    .document(docId)
 
-                    } else {
+                // 직원 데이터 확인
+                docWorker.get().addOnSuccessListener { document ->
+                    if (document.exists()) {
                         if (document.get("finishSignin") == true) {
-                            Log.d("SIGNIN", "Already Verificated Number")
-                            Toast.makeText(activity, "이미 등록된 번호입니다 \n 로그인해주세요", Toast.LENGTH_LONG)
+                            Log.d("SIGNIN", "Already Verificated Number as Worker")
+                            Toast.makeText(activity, "이미 직원으로 등록된 번호에요", Toast.LENGTH_LONG)
                                 .show()
-                            binding.warningPhone.text = "이미 등록된 번호입니다! 로그인해주세요"
+                            binding.warningPhone.text = "이미 직원으로 등록된 번호에요"
                             binding.warningPhone.setTextColor(Color.RED)
-
                         } else {
-                            Log.d("SIGNIN", "Run Phone Number Verification (Uncompleted User)")
+                            Log.d(
+                                "SIGNIN",
+                                "Run Phone Number Verification (Uncompleted User as Worker)"
+                            )
+                            db.collection("worker").document(docId).delete()
                             if (binding.warningPhone.text == "이미 등록된 번호입니다! 로그인해주세요") {
-
                                 binding.warningPhone.text = ""
                             }
                             startPhoneNumberVerification(phone)
                         }
+
+
+                    } else {
+                        // 관리자 데이터 확인
+                        docOwner.get().addOnSuccessListener { document ->
+                            if (!document.exists()) {
+                                Log.d("SIGNIN", "Run Phone Number Verification (New User)")
+                                if (binding.warningPhone.text == "이미 등록된 번호입니다! 로그인해주세요") {
+                                    binding.warningPhone.text = ""
+                                }
+                                startPhoneNumberVerification(phone)
+
+                            } else {
+                                if (document.get("finishSignin") == true) {
+                                    Log.d("SIGNIN", "Already Verificated Number")
+                                    Toast.makeText(
+                                        activity,
+                                        "이미 등록된 번호입니다 \n 로그인해주세요",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    binding.warningPhone.text = "이미 등록된 번호입니다! 로그인해주세요"
+                                    binding.warningPhone.setTextColor(Color.RED)
+
+                                } else {
+                                    Log.d(
+                                        "SIGNIN",
+                                        "Run Phone Number Verification (Uncompleted User)"
+                                    )
+                                    if (binding.warningPhone.text == "이미 등록된 번호입니다! 로그인해주세요") {
+
+                                        binding.warningPhone.text = ""
+                                    }
+                                    startPhoneNumberVerification(phone)
+                                }
+                            }
+                        }.addOnFailureListener { e ->
+                            Log.d("SIGNIN", "btnPhonenumber failure ($e)")
+                        }
                     }
-                }.addOnFailureListener { e ->
-                    Log.d("SIGNIN", "btnPhonenumber failure ($e)")
+                }.addOnFailureListener {
+                    Log.d("SIGNIN", "Failed to check data from db")
+                    Toast.makeText(activity, "인터넷 연결 상태를 확인해주세요", Toast.LENGTH_LONG)
+                        .show()
                 }
+
             }
         }
 
@@ -284,9 +325,5 @@ class SigninOwnerAuthFragment : Fragment() {
                 progressDialogAuth.dismiss()
                 Toast.makeText(activity, "인증번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
     }
 }

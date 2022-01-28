@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
     implementation 'com.github.welcome2c:LottieProgressDialog:1.0.1'
-    compileOnly 'com.google.android.wearable:wearable:2.6.0'
+
+    compile 'com.github.kizitonwose.time:time-android:1.0.4'
 
 }
